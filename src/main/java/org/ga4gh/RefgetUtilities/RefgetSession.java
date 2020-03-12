@@ -1,7 +1,7 @@
 package org.ga4gh.RefgetUtilities;
 
 import io.restassured.path.json.JsonPath;
-import org.ga4gh.ComplianceFramework.Constants;
+import static org.ga4gh.ComplianceFramework.Constants.*;
 import org.ga4gh.ComplianceFramework.Server;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -25,15 +25,14 @@ public class RefgetSession {
         }
         refgetServer.setServerName(serverName);
 
-        JsonPath serviceInfoResponse = RefgetUtilities.getServiceInfoResponse(refgetServer).jsonPath();
+        JsonPath response = RefgetUtilities.getServiceInfoResponse(refgetServer).jsonPath();
 
-        Map<String, Object> properties = new HashMap<>();
-        properties.put(Constants.REFGET_PROPERTY_CIRCULAR_SUPPORTED, serviceInfoResponse.get(Constants.REFGET_PROPERTY_SERVICE+ "." + Constants.REFGET_PROPERTY_CIRCULAR_SUPPORTED));
-        properties.put(Constants.REFGET_PROPERTY_ALGORITHMS, serviceInfoResponse.get(Constants.REFGET_PROPERTY_SERVICE+ "." + Constants.REFGET_PROPERTY_ALGORITHMS));
-        properties.put(Constants.REFGET_PROPERTY_SUBSEQUENCE_LIMIT, serviceInfoResponse.get(Constants.REFGET_PROPERTY_SERVICE+ "." + Constants.REFGET_PROPERTY_SUBSEQUENCE_LIMIT));
-        properties.put(Constants.REFGET_PROPERTY_SUPPORTED_API_VERSION, serviceInfoResponse.get(Constants.REFGET_PROPERTY_SERVICE+ "." + Constants.REFGET_PROPERTY_SUPPORTED_API_VERSION));
-
-        refgetServer.setServerProperties(properties);
+        Map<String, Object> props = new HashMap<>();
+        props.put(REFGET_PROPERTY_CIRCULAR_SUPPORTED, response.get(REFGET_PROPERTY_CIRCULAR_SUPPORTED));
+        props.put(REFGET_PROPERTY_ALGORITHMS, response.get(REFGET_PROPERTY_ALGORITHMS));
+        props.put(REFGET_PROPERTY_SUBSEQUENCE_LIMIT, response.get(REFGET_PROPERTY_SUBSEQUENCE_LIMIT));
+        props.put(REFGET_PROPERTY_VERSION, response.get(REFGET_PROPERTY_VERSION));
+        refgetServer.setServerProperties(props);
 
         testObject.put("server_name", refgetServer.getServerName());
         testObject.put("base_url", refgetServer.getBaseUrl());

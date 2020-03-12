@@ -21,7 +21,7 @@ public class RefgetBaseTest {
 
     @BeforeTest
     @Parameters("url")
-    public void setup(@Optional("http://refget.herokuapp.com")String url) throws IOException, ParseException {
+    public void setup(@Optional("http://refget-dev.herokuapp.com")String url) throws IOException, ParseException {
         JSONParser parser = new JSONParser();
         Object object = parser.parse(new FileReader(Constants.RESULT_DIR + "results.json"));
         RefgetSession.resultsArray = (JSONArray) ((JSONObject)object).get("servers");
@@ -40,7 +40,7 @@ public class RefgetBaseTest {
         RefgetSession.testObject.put("total_skipped_tests", context.getSkippedTests().size());
 
         RefgetUtilities.removeIfResultPresent(RefgetSession.testObject, RefgetSession.resultsArray);
-        
+
         RefgetSession.resultsArray.add(RefgetSession.testObject);
 
         FileWriter file = new FileWriter(Constants.RESULT_DIR + "results.json");

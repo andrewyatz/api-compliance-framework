@@ -91,7 +91,7 @@ public class InfoEndpointTest {
         tempQueryArray.add("Response: " + response.getBody().asString());
         tempQueryArray.add("Request Headers: " + headerMap.toString());
 
-        HashMap serviceJson = response.jsonPath().get("service");
+        HashMap serviceJson = response.jsonPath().get("refget");
         boolean flag = serviceJson.containsKey("circular_supported");
 
         //testing
@@ -109,7 +109,7 @@ public class InfoEndpointTest {
         tempQueryArray.add("Response: " + response.getBody().asString());
         tempQueryArray.add("Request Headers: " + headerMap.toString());
 
-        HashMap serviceJson = response.jsonPath().get("service");
+        HashMap serviceJson = response.jsonPath().get("refget");
         boolean flag = serviceJson.containsKey("algorithms");
 
         //testing
@@ -127,7 +127,7 @@ public class InfoEndpointTest {
         tempQueryArray.add("Response: " + response.getBody().asString());
         tempQueryArray.add("Request Headers: " + headerMap.toString());
 
-        HashMap serviceJson = response.jsonPath().get("service");
+        HashMap serviceJson = response.jsonPath().get("refget");
         boolean flag = serviceJson.containsKey("subsequence_limit");
 
         //testing
@@ -145,8 +145,8 @@ public class InfoEndpointTest {
         tempQueryArray.add("Response: " + response.getBody().asString());
         tempQueryArray.add("Request Headers: " + headerMap.toString());
 
-        HashMap serviceJson = response.jsonPath().get("service");
-        boolean flag = serviceJson.containsKey("supported_api_versions");
+        HashMap serviceJson = response.jsonPath().get("type");
+        boolean flag = serviceJson.containsKey("version");
 
         //testing
         Assert.assertTrue(TestingFramework.checkSuccess(response));

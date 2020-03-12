@@ -1,6 +1,5 @@
 package org.ga4gh.RefgetUtilities;
 
-import com.sun.org.apache.bcel.internal.generic.ANEWARRAY;
 import io.restassured.response.Response;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -42,9 +41,9 @@ public class RefgetUtilities {
      * @throws IOException if there are errors while reading the file.
      * @throws ParseException if there are errors in converting the file to a JSONObject. Can occur if file does not follow proper JSON syntax.
      */
-    public static JSONObject readChecksumsJSON(String ch) throws IOException, ParseException {
-        Object obj = new JSONParser().parse(new FileReader(Constants.RESOURCE_DIR + "checksums.json"));
-        JSONObject fileObj = (JSONObject) obj;
+    public static JSONObject readChecksumsJSON(final String ch) throws IOException, ParseException {
+        final Object obj = new JSONParser().parse(new FileReader(Constants.RESOURCE_DIR + "checksums.json"));
+        final JSONObject fileObj = (JSONObject) obj;
         return (JSONObject) fileObj.get(ch);
     }
 
@@ -53,7 +52,7 @@ public class RefgetUtilities {
      * @param filename The name of the file to be read. The file must be present in the 'resources' directory.
      * @return The full sequence as a String.
      */
-    public static String readSequenceFromFastaFile(String filename) throws IOException {
+    public static String readSequenceFromFastaFile(final String filename) throws IOException {
         String sequence = Utilities.readFileToString(filename);
         sequence = sequence.replaceAll(">.*\\r?\\n", "");
         sequence = sequence.replaceAll("\\r?\\n", "");
@@ -66,8 +65,8 @@ public class RefgetUtilities {
      * @throws IOException if there are errors while reading the file.
      * @throws ParseException if there are errors in converting the file to a JSONObject. Can occur if file does not follow proper JSON syntax.
      */
-    public static Sequence getValidSequenceObject(String seq) throws IOException, ParseException {
-        JSONObject seqChecksumObj = readChecksumsJSON(seq);
+    public static Sequence getValidSequenceObject(final String seq) throws IOException, ParseException {
+        final JSONObject seqChecksumObj = readChecksumsJSON(seq);
         log.debug("Extracted JSONObject: " + seqChecksumObj);
         return new Sequence(seqChecksumObj);
     }
@@ -79,7 +78,7 @@ public class RefgetUtilities {
      * @throws ParseException if there are errors in converting the file to a JSONObject. Can occur if file does not follow proper JSON syntax.
      */
     public static Sequence getValidCircularSequenceObject() throws IOException, ParseException {
-        JSONObject seqChecksumObj = readChecksumsJSON("NC");
+        final JSONObject seqChecksumObj = readChecksumsJSON("NC");
         log.debug("Extracted JSONObject: " + seqChecksumObj);
         return new Sequence(seqChecksumObj);
     }
@@ -90,8 +89,8 @@ public class RefgetUtilities {
      * @param id The id/hash of the sequence to be retrieved.
      * @return The response sent by the server.
      */
-    public static Response getSequenceResponse(Server refgetServer, String id){
-        String finalEndpoint = refgetServer.getEndpoint(Constants.SEQUENCE_ENDPOINT + id);
+    public static Response getSequenceResponse(final Server refgetServer, final String id){
+        final String finalEndpoint = refgetServer.getEndpoint(Constants.SEQUENCE_ENDPOINT + id);
         return request.GET(finalEndpoint);
     }
 
@@ -103,9 +102,9 @@ public class RefgetUtilities {
      * @param end The value of the 'end' query parameter of sub-sequence.
      * @return The response sent by the server.
      */
-    public static Response getSequenceResponse(Server refgetServer, String id, Integer start, Integer end){
-        String finalEndpoint = refgetServer.getEndpoint(Constants.SEQUENCE_ENDPOINT + id);
-        Map<String, String> parameterMap = new HashMap<>();
+    public static Response getSequenceResponse(final Server refgetServer, final String id, final Integer start, final Integer end){
+        final String finalEndpoint = refgetServer.getEndpoint(Constants.SEQUENCE_ENDPOINT + id);
+        final Map<String, String> parameterMap = new HashMap<>();
         if(start != null) {
             parameterMap.put("start", start.toString());
         }
@@ -122,8 +121,8 @@ public class RefgetUtilities {
      * @param headerMap The headers to be sent with the request.
      * @return The response sent by the server.
      */
-    public static Response getSequenceResponse(Server refgetServer, String id, Map<String, String> headerMap){
-        String finalEndpoint = refgetServer.getEndpoint(Constants.SEQUENCE_ENDPOINT + id);
+    public static Response getSequenceResponse(final Server refgetServer, final String id, final Map<String, String> headerMap){
+        final String finalEndpoint = refgetServer.getEndpoint(Constants.SEQUENCE_ENDPOINT + id);
         return request.GETWithHeaders(finalEndpoint, headerMap);
     }
 
@@ -132,8 +131,8 @@ public class RefgetUtilities {
      * @param refgetServer The server object of the server that will receive the request.
      * @return The response sent by the server.
      */
-    public static Response getServiceInfoResponse(Server refgetServer){
-        String finalEndpoint = refgetServer.getEndpoint(Constants.INFO_ENDPOINT);
+    public static Response getServiceInfoResponse(final Server refgetServer){
+        final String finalEndpoint = refgetServer.getEndpoint(Constants.INFO_ENDPOINT);
         return request.GET(finalEndpoint);
     }
 
@@ -143,8 +142,8 @@ public class RefgetUtilities {
      * @param headerMap The headers to be sent with the request.
      * @return The response sent by the server.
      */
-    public static Response getServiceInfoResponse(Server refgetServer, Map<String, String> headerMap){
-        String finalEndpoint = refgetServer.getEndpoint(Constants.INFO_ENDPOINT);
+    public static Response getServiceInfoResponse(final Server refgetServer, final Map<String, String> headerMap){
+        final String finalEndpoint = refgetServer.getEndpoint(Constants.INFO_ENDPOINT);
         return request.GETWithHeaders(finalEndpoint, headerMap);
     }
 
@@ -154,8 +153,8 @@ public class RefgetUtilities {
      * @param id The id/hash of the sequence whose metadata is to be retrieved.
      * @return The response sent by the server.
      */
-    public static Response getMetadataResponse(Server refgetServer, String id){
-        String finalEndpoint = refgetServer.getEndpoint(Constants.SEQUENCE_ENDPOINT + id + Constants.METADATA_ENDPOINT);
+    public static Response getMetadataResponse(final Server refgetServer, final String id){
+        final String finalEndpoint = refgetServer.getEndpoint(Constants.SEQUENCE_ENDPOINT + id + Constants.METADATA_ENDPOINT);
         return request.GET(finalEndpoint);
     }
 
@@ -166,20 +165,20 @@ public class RefgetUtilities {
      * @param headerMap The headers to be sent with the request.
      * @return The response sent by the server.
      */
-    public static Response getMetadataResponse(Server refgetServer, String id, Map<String, String> headerMap){
-        String finalEndpoint = refgetServer.getEndpoint(Constants.SEQUENCE_ENDPOINT + id + Constants.METADATA_ENDPOINT);
+    public static Response getMetadataResponse(final Server refgetServer, final String id, final Map<String, String> headerMap){
+        final String finalEndpoint = refgetServer.getEndpoint(Constants.SEQUENCE_ENDPOINT + id + Constants.METADATA_ENDPOINT);
         return request.GETWithHeaders(finalEndpoint, headerMap);
     }
 
-    public static String generateTestDescription(String testName) {
+    public static String generateTestDescription(final String testName) {
         return "Description";
     }
 
-    public static String generateResultText(String testName, int result) {
+    public static String generateResultText(final String testName, final int result) {
         return "Test Result";
     }
 
-    public static void removeIfResultPresent(JSONObject obj, JSONArray arr) {
+    public static void removeIfResultPresent(final JSONObject obj, final JSONArray arr) {
         boolean present = false;
         int i;
         for(i = 0 ; i < arr.size() ; i++) {
@@ -189,7 +188,7 @@ public class RefgetUtilities {
             }
         }
         if(present) {
-            JSONArray newArray = new JSONArray();
+            final JSONArray newArray = new JSONArray();
             for (int index = 0; index < arr.size(); index++) {
                 if (index == i) {
                     continue;

@@ -1,4 +1,4 @@
-  
+
 # Windows thumbnail cache files
 Thumbs.db
 Thumbs.db:encryptable
@@ -141,3 +141,7 @@ resources/tests.json
 
 __pycache__/
 report_server.pyc
+.vscode/launch.json
+.classpath
+.project
+.settings/

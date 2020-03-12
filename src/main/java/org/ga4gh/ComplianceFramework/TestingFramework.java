@@ -90,6 +90,7 @@ public class TestingFramework {
         log.info("Checking if response was SUCCESS");
         boolean flag = (response.statusCode() == 200);
         log.debug("Response success flag: " + flag);
+        log.debug("Response status code: " + String.valueOf(response.statusCode())+" | reason: "+response.statusLine());
         return flag;
     }
 
